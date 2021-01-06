@@ -7,7 +7,7 @@ module.exports = grammar({
   ],
 
   rules: {
-    // TODO: add the actual grammar rules
+
     source_file: $ => repeat($._definition),
 
     _definition: $ => choice(
@@ -31,9 +31,9 @@ module.exports = grammar({
       $._type,
       $.var_input_block,
       $.var_block,
-      // Statements: Assignments, function block or function calls, variable calls, conditional statements, loop statements
       field('body', repeat($.statement)),
-      'END_FUNCTION'
+      'END_FUNCTION',
+      optional(';')
     ),
 
     var_input_block: $ => seq(
@@ -208,13 +208,8 @@ module.exports = grammar({
     */
     comment: $ => prec(1, choice(
       seq('//', /.*/),
-      seq( // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
+      seq(
         '(*',
-        // 1. Match 0+ characters other than `*`, followed by 1+ literal `*`: `[^*]*\*+`
-        // 2. 0+ of:
-        // 2a. Not a `*` or `)`
-        // 2b. 0+ non-asterisk
-        // 2c. 1+ asterisk
         /[^*]*\*+([^*)][^*]*\*+)*/,
         ')'
       )

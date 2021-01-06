@@ -1,14 +1,30 @@
 {
   "name": "tree-sitter-iecst",
   "version": "0.0.1",
-  "description": "",
+  "description": "IEC 61131-3 Structured Text (ST) grammar for tree-sitter",
+  "keywords": [
+    "Structured",
+    "Text",
+    "ST",
+    "IEC",
+    "61131",
+    "PLC",
+    "Atom",
+    "tree-sitter",
+    "parser",
+    "grammer"
+  ],
   "main": "index.js",
   "scripts": {
     "generate": "tree-sitter generate",
     "test": "tree-sitter test"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kmpm/tree-sitter-iecst.git"
+  },
+  "author": "Peter Magnusson <me@kmpm.se>",
+  "license": "MIT",
   "dependencies": {
     "nan": "^2.14.2"
   },

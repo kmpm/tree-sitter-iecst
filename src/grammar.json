@@ -102,6 +102,18 @@
         {
           "type": "STRING",
           "value": "END_FUNCTION"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
