@@ -1,0 +1,23 @@
+===============
+Function
+===============
+
+FUNCTION TestReturn : INT
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+
+TestReturn := 1;
+
+END_FUNCTION
+
+---
+
+(source_file
+  (function_definition
+    (identifier)
+    (var_input_block)
+    (var_block)
+    (statement
+      (assignment (variable (identifier)) (literal (number))))))
