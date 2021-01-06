@@ -1,0 +1,88 @@
+===============
+Function
+===============
+(*
+  Nice multiline
+*)
+FUNCTION TestReturn : INT
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+// line comment
+TestReturn := 1;
+
+END_FUNCTION
+
+---
+
+(source_file
+  (comment)
+  (function_definition (identifier) (predefined_type)
+    (var_input_block)
+    (var_block)
+    (comment)
+    (statement
+      (assignment (variable (identifier)) (literal (number))))))
+
+
+====================
+Function with input
+====================
+
+FUNCTION TestAdd : INT
+VAR_INPUT
+  a : INT;
+END_VAR
+VAR
+  b : BOOL;
+END_VAR
+
+  TestAdd := a + 1;
+END_FUNCTION
+
+---
+
+(source_file
+  (function_definition (identifier) (predefined_type)
+    (var_input_block 
+      (variable_declaration (identifier) (predefined_type)))
+    (var_block
+      (variable_declaration (identifier) (predefined_type)))
+    (statement
+      (assignment (variable (identifier)) (binary_expression (variable (identifier)) (literal (number)))))))
+
+
+=================
+Function with lower + underscore
+=================
+FUNCTION some_name : INT
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+
+END_FUNCTION
+
+---
+(source_file
+  (function_definition (identifier) (predefined_type) 
+  (var_input_block) 
+  (var_block)))
+
+=================
+Function with upper + underscore
+=================
+FUNCTION SOME_NAME : INT
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+
+END_FUNCTION
+
+---
+(source_file
+  (function_definition (identifier) (predefined_type) 
+  (var_input_block) 
+  (var_block)))

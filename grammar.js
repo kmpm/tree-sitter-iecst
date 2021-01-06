@@ -1,16 +1,28 @@
 module.exports = grammar({
   name: 'iecst',
 
+  extras : $ => [
+    $.comment,
+    /\s/
+  ],
+
   rules: {
     // TODO: add the actual grammar rules
     source_file: $ => repeat($._definition),
 
     _definition: $ => choice(
-      $.function_definition
+      $.function_definition,
+      $.program_definition
       // TODO: other kinds of definitions
     ),
-
     
+    program_definition: $ => seq(
+      'PROGRAM',
+      field('name', $.identifier),
+      $.var_block,
+      field('body', repeat($.statement)),
+      'END_PROGRAM'
+    ),
 
     function_definition: $ => seq(
       'FUNCTION',
@@ -26,19 +38,31 @@ module.exports = grammar({
 
     var_input_block: $ => seq(
       'VAR_INPUT',
+      repeat($.variable_declaration),
       'END_VAR'
     ),
 
     var_block: $ => seq(
       'VAR',
+      repeat($.variable_declaration),
       'END_VAR'
     ),
 
     statement: $ => choice(
       $.assignment,
+      $.repeat_statement
       // expression_statement
       // control_statement
       // loop_statement
+    ),
+
+    repeat_statement: $ => seq(
+      'REPEAT', 
+      repeat($.statement),
+      'UNTIL', 
+      $._expression,
+      'END_REPEAT',
+      optional(';')
     ),
 
     assignment: $ => seq(
@@ -84,14 +108,52 @@ module.exports = grammar({
     ),
     
     _type: $ => choice(
-      'INT'
+      $.predefined_type
       // TODO: other kinds of types
     ),
+
+    predefined_type: $ => token(choice(
+      // Bit strings
+      'BOOL',
+      'BYTE',
+      'WORD',
+      'DWORD',
+      'LWORD',
+      // Integers
+      'SINT',
+      'INT',
+      'DINT',
+      'LINT',
+      'USINT',
+      'UINT',
+      'UDINT',
+      'ULINT',
+      // Real
+      'REAL',
+      'LREAL',
+      // Time
+      'TIME',
+      'LTIME',
+      // Character string
+      'CHAR',
+      'WCHAR',
+      'STRING',
+      'WSTRING'
+      // TODO: Add the rest
+    )),
 
     /*
       Variables
     */
-    
+
+    variable_declaration: $ => seq(
+      field('name', $.identifier),
+      ':',
+      field('type', $._type),
+      ';'
+    ),
+
+   
     variable: $ => seq(
       field('name', $.identifier),
       optional($._index_array),
@@ -118,8 +180,14 @@ module.exports = grammar({
     */
     literal: $ => choice(
       $.number,
+      $.boolean_literal
       // string
       // time
+    ),
+
+    boolean_literal: $ => choice(
+      'TRUE',
+      'FALSE'
     ),
     
     number: $ => {
@@ -153,7 +221,7 @@ module.exports = grammar({
     )),
     
     // Function, function block, or variable name
-    identifier: $ => /[a-zA-Z_]\w*/ // Non-digit character followed by any character
+    identifier: $ => /[a-zA-Z]+[_\w]*/ // Non-digit character followed by any character
 
   }
 });

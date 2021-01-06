@@ -14,6 +14,46 @@
         {
           "type": "SYMBOL",
           "name": "function_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "program_definition"
+        }
+      ]
+    },
+    "program_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "PROGRAM"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "var_block"
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "statement"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "END_PROGRAM"
         }
       ]
     },
@@ -73,6 +113,13 @@
           "value": "VAR_INPUT"
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "variable_declaration"
+          }
+        },
+        {
           "type": "STRING",
           "value": "END_VAR"
         }
@@ -86,6 +133,13 @@
           "value": "VAR"
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "variable_declaration"
+          }
+        },
+        {
           "type": "STRING",
           "value": "END_VAR"
         }
@@ -97,6 +151,50 @@
         {
           "type": "SYMBOL",
           "name": "assignment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "repeat_statement"
+        }
+      ]
+    },
+    "repeat_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "REPEAT"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "statement"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "UNTIL"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        },
+        {
+          "type": "STRING",
+          "value": "END_REPEAT"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -506,8 +604,129 @@
       "type": "CHOICE",
       "members": [
         {
+          "type": "SYMBOL",
+          "name": "predefined_type"
+        }
+      ]
+    },
+    "predefined_type": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "BOOL"
+          },
+          {
+            "type": "STRING",
+            "value": "BYTE"
+          },
+          {
+            "type": "STRING",
+            "value": "WORD"
+          },
+          {
+            "type": "STRING",
+            "value": "DWORD"
+          },
+          {
+            "type": "STRING",
+            "value": "LWORD"
+          },
+          {
+            "type": "STRING",
+            "value": "SINT"
+          },
+          {
+            "type": "STRING",
+            "value": "INT"
+          },
+          {
+            "type": "STRING",
+            "value": "DINT"
+          },
+          {
+            "type": "STRING",
+            "value": "LINT"
+          },
+          {
+            "type": "STRING",
+            "value": "USINT"
+          },
+          {
+            "type": "STRING",
+            "value": "UINT"
+          },
+          {
+            "type": "STRING",
+            "value": "UDINT"
+          },
+          {
+            "type": "STRING",
+            "value": "ULINT"
+          },
+          {
+            "type": "STRING",
+            "value": "REAL"
+          },
+          {
+            "type": "STRING",
+            "value": "LREAL"
+          },
+          {
+            "type": "STRING",
+            "value": "TIME"
+          },
+          {
+            "type": "STRING",
+            "value": "LTIME"
+          },
+          {
+            "type": "STRING",
+            "value": "CHAR"
+          },
+          {
+            "type": "STRING",
+            "value": "WCHAR"
+          },
+          {
+            "type": "STRING",
+            "value": "STRING"
+          },
+          {
+            "type": "STRING",
+            "value": "WSTRING"
+          }
+        ]
+      }
+    },
+    "variable_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
           "type": "STRING",
-          "value": "INT"
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -632,6 +851,23 @@
         {
           "type": "SYMBOL",
           "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "boolean_literal"
+        }
+      ]
+    },
+    "boolean_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "TRUE"
+        },
+        {
+          "type": "STRING",
+          "value": "FALSE"
         }
       ]
     },
@@ -710,10 +946,14 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_]\\w*"
+      "value": "[a-zA-Z]+[_\\w]*"
     }
   },
   "extras": [
+    {
+      "type": "SYMBOL",
+      "name": "comment"
+    },
     {
       "type": "PATTERN",
       "value": "\\s"

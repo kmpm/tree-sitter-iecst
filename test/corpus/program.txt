@@ -1,0 +1,44 @@
+===============
+Program CODESYS PLC_PRG
+===============
+
+PROGRAM PLC_PRG
+VAR
+END_VAR
+
+END_PROGRAM
+
+---
+(source_file 
+    (program_definition (identifier)
+        (var_block)))
+
+
+============================
+Simple program
+============================
+
+PROGRAM stexample
+  VAR
+    x : BOOL;
+  END_VAR
+  x := TRUE;
+  REPEAT
+    x := FALSE;
+  UNTIL x = FALSE
+  END_REPEAT
+END_PROGRAM
+
+---
+(source_file
+    (program_definition (identifier)
+        (var_block
+            (variable_declaration (identifier) (predefined_type)))
+        (statement (assignment (variable (identifier)) (literal (boolean_literal))))
+        (statement (repeat_statement
+            (statement (assignment (variable (identifier)) (literal (boolean_literal))))
+            (binary_expression (variable (identifier)) (literal (boolean_literal)))
+        ))
+
+    )
+)

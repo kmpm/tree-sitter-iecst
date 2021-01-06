@@ -54,6 +54,16 @@
     }
   },
   {
+    "type": "boolean_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "dot_operator",
     "named": true,
     "fields": {},
@@ -97,6 +107,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "predefined_type",
+          "named": true
+        },
         {
           "type": "var_block",
           "named": true
@@ -143,6 +157,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
         {
           "type": "number",
           "named": true
@@ -202,6 +220,73 @@
     "fields": {}
   },
   {
+    "type": "program_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "statement",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "var_block",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "repeat_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -211,6 +296,10 @@
       "types": [
         {
           "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "program_definition",
           "named": true
         }
       ]
@@ -226,6 +315,10 @@
       "types": [
         {
           "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "repeat_statement",
           "named": true
         }
       ]
@@ -261,12 +354,32 @@
   {
     "type": "var_block",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "var_input_block",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "variable",
@@ -312,6 +425,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "variable_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "predefined_type",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -403,7 +542,19 @@
     "named": false
   },
   {
+    "type": "END_PROGRAM",
+    "named": false
+  },
+  {
+    "type": "END_REPEAT",
+    "named": false
+  },
+  {
     "type": "END_VAR",
+    "named": false
+  },
+  {
+    "type": "FALSE",
     "named": false
   },
   {
@@ -411,11 +562,23 @@
     "named": false
   },
   {
-    "type": "INT",
+    "type": "OR",
     "named": false
   },
   {
-    "type": "OR",
+    "type": "PROGRAM",
+    "named": false
+  },
+  {
+    "type": "REPEAT",
+    "named": false
+  },
+  {
+    "type": "TRUE",
+    "named": false
+  },
+  {
+    "type": "UNTIL",
     "named": false
   },
   {
@@ -440,6 +603,10 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "predefined_type",
     "named": true
   }
 ]
